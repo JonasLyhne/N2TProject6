@@ -19,6 +19,7 @@ void StartUp()
             // Is single file. Do stuff
             Console.WriteLine("You have entered the path of a single file..");
             Console.WriteLine("Press any key to continue.");
+            Console.ReadKey();
             if (path.Contains(".asm"))
             {
                 ProcessSingleFile(path);
@@ -37,6 +38,7 @@ void StartUp()
             Console.WriteLine("You have entered the path of a directory..");
             Console.WriteLine("Will try to translate all .asm files.");
             Console.WriteLine("Press any key to continue.");
+            Console.ReadKey();
             ProcessDirectory(path);
             Console.WriteLine("Translation done.");
             Console.ReadKey();
