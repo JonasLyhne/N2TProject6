@@ -5,7 +5,7 @@ namespace HackAssembler
 {
     public class Translator
     {
-
+        private int number = 16;
         public string[] TranslateToBinary(string[] assemblyString)
         {
             assemblyString = TranslateAInstructions(assemblyString);
@@ -24,6 +24,11 @@ namespace HackAssembler
                 else if (SymbolTable.Pointers != null && SymbolTable.Pointers.ContainsKey(instruction))
                 {
                     address = SymbolTable.Pointers[instruction];
+                }
+                else
+                {
+                    address = GoToNextNumber();
+                    SymbolTable.Pointers?.Add(instruction,address);
                 }
                 assemblyString[i] = Convert.ToString(address, 2).PadLeft(16, '0');
             }
@@ -79,6 +84,13 @@ namespace HackAssembler
             }
 
             return assemblyString;
+        }
+
+        private int GoToNextNumber()
+        {
+            var next = number;
+            number++;
+            return next;
         }
     }
 }

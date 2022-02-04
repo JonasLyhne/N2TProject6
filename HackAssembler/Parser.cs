@@ -18,7 +18,7 @@ namespace HackAssembler
         public string Parse(string assemblyFile)
         {
             var assemblyText = assemblyFile.Split('\n');
-            CleanUp(assemblyText);
+            assemblyText = CleanUp(assemblyText);
             return JoinArrayToString(translator.TranslateToBinary(assemblyText));
         }
 
@@ -35,8 +35,8 @@ namespace HackAssembler
         private string[] CleanUp(string[] assemblyText)
         {
             assemblyText = RemoveComments(assemblyText);
-            assemblyText = RemoveEmptyLines(assemblyText);
             assemblyText = RemoveWhiteSpace(assemblyText);
+            assemblyText = RemoveEmptyLines(assemblyText);
             assemblyText = RemoveLabels(assemblyText);
             return assemblyText;
         }
@@ -76,7 +76,10 @@ namespace HackAssembler
                 if (line.Contains('(') && line.Contains(')'))
                 {
                     var pointer = line.Trim('(', ')');
-                    SymbolTable.Pointers?.Add(pointer, list.Count);
+                    if (SymbolTable.Pointers != null && !SymbolTable.Pointers.ContainsKey(pointer))
+                    {
+                        SymbolTable.Pointers.Add(pointer, list.Count);
+                    }
                 }
                 else
                 {
